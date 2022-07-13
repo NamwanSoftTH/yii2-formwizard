@@ -1,11 +1,11 @@
 <?php
 namespace buttflattery\formwizard\traits;
 
+use buttflattery\formwizard\FormWizard;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\JsExpression;
-use yii\helpers\ArrayHelper;
-use buttflattery\formwizard\FormWizard;
 
 trait StepTrait
 {
@@ -59,7 +59,7 @@ trait StepTrait
         list(
             $options, $isMultiField, $fieldType, $widget, $template, $containerOptions, $inputOptions, $itemsList, $label, $labelOptions, $hintText, $activeFieldOptions
         ) = $this->_parseFieldConfig($fieldConfig);
-        
+
         //create field
         $field = $this->createField(
             $model,
@@ -67,8 +67,8 @@ trait StepTrait
             array_merge(
                 $activeFieldOptions,
                 [
-                    'template' => $template,
-                    'options' => $containerOptions,
+                    'template'     => $template,
+                    'options'      => $containerOptions,
                     'inputOptions' => $inputOptions,
                 ]
             ),
@@ -91,11 +91,11 @@ trait StepTrait
 
         //init the options for the field types
         $fieldTypeOptions = [
-            'field' => $field,
-            'options' => $options,
+            'field'        => $field,
+            'options'      => $options,
             'labelOptions' => $labelOptions,
-            'label' => $label,
-            'itemsList' => $itemsList,
+            'label'        => $label,
+            'itemsList'    => $itemsList,
         ];
 
         //create the field
@@ -295,6 +295,14 @@ JS;
     {
         $defaultFieldTypes = [
             'text' => function ($params) {
+                $field = $params['field'];
+                $options = $params['options'];
+                $label = $params['label'];
+                $labelOptions = $params['labelOptions'];
+
+                return $field->textInput($options)->label($label, $labelOptions);
+            },
+            'tel' => function ($params) {
                 $field = $params['field'];
                 $options = $params['options'];
                 $label = $params['label'];

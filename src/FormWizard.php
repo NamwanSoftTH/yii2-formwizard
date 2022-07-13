@@ -11,20 +11,20 @@
  */
 namespace buttflattery\formwizard;
 
+use buttflattery\formwizard\assetbundles\bs3\FormWizardAsset as Bs3Assets;
+use buttflattery\formwizard\assetbundles\bs4\FormWizardAsset as Bs4Assets;
+use buttflattery\formwizard\step\Generator;
+use buttflattery\formwizard\traits\WizardTrait;
 use Yii;
-use yii\web\View;
+use yii\base\InvalidArgumentException as ArgException;
 use yii\base\Widget;
+use yii\bootstrap4\ActiveForm as BS4ActiveForm;
+use yii\bootstrap\ActiveForm as BS3ActiveForm;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\JsExpression;
-use yii\helpers\ArrayHelper;
-use buttflattery\formwizard\step\Generator;
-use yii\bootstrap\ActiveForm as BS3ActiveForm;
-use buttflattery\formwizard\traits\WizardTrait;
-use yii\bootstrap4\ActiveForm as BS4ActiveForm;
-use yii\base\InvalidArgumentException as ArgException;
-use buttflattery\formwizard\assetbundles\bs3\FormWizardAsset as Bs3Assets;
-use buttflattery\formwizard\assetbundles\bs4\FormWizardAsset as Bs4Assets;
+use yii\web\View;
 
 /**
  * A Yii2 plugin used for creating stepped form or form wizard using
@@ -494,12 +494,12 @@ class FormWizard extends Widget
      * @var array
      */
     protected $themesSupported = [
-        self::THEME_DOTS => 'Dots',
-        self::THEME_CIRCLES => 'Circles',
-        self::THEME_ARROWS => 'Arrows',
-        self::THEME_MATERIAL => 'Material',
+        self::THEME_DOTS       => 'Dots',
+        self::THEME_CIRCLES    => 'Circles',
+        self::THEME_ARROWS     => 'Arrows',
+        self::THEME_MATERIAL   => 'Material',
         self::THEME_MATERIAL_V => 'MaterialVerticle',
-        self::THEME_TAGS => 'Tags',
+        self::THEME_TAGS       => 'Tags',
     ];
 
     /**
@@ -571,28 +571,28 @@ class FormWizard extends Widget
     public function getPluginOptions()
     {
         return [
-            'selected' => 0,
-            'keyNavigation' => false,
-            'autoAdjustHeight' => $this->autoAdjustHeight,
-            'disabledSteps' => $this->disabledSteps,
-            'errorSteps' => $this->errorSteps,
+            'selected'          => 0,
+            'keyNavigation'     => false,
+            'autoAdjustHeight'  => $this->autoAdjustHeight,
+            'disabledSteps'     => $this->disabledSteps,
+            'errorSteps'        => $this->errorSteps,
             'backButtonSupport' => false,
-            'theme' => $this->theme,
-            'transitionEffect' => $this->transitionEffect,
-            'showStepURLhash' => $this->showStepURLhash,
-            'toolbarSettings' => [
-                'toolbarPosition' => $this->toolbarPosition,
-                'showNextButton' => false,
-                'showPreviousButton' => false,
+            'theme'             => $this->theme,
+            'transitionEffect'  => $this->transitionEffect,
+            'showStepURLhash'   => $this->showStepURLhash,
+            'toolbarSettings'   => [
+                'toolbarPosition'     => $this->toolbarPosition,
+                'showNextButton'      => false,
+                'showPreviousButton'  => false,
                 'toolbarExtraButtons' => $this->toolbarExtraButtons,
             ],
-            'anchorSettings' => [
-                'anchorClickable' => $this->editMode,
-                'enableAllAnchors' => $this->editMode,
-                'markDoneStep' => $this->markDoneStep,
-                'markAllPreviousStepsAsDone' => $this->markAllPreviousStepsAsDone,
+            'anchorSettings'    => [
+                'anchorClickable'              => $this->editMode,
+                'enableAllAnchors'             => $this->editMode,
+                'markDoneStep'                 => $this->markDoneStep,
+                'markAllPreviousStepsAsDone'   => $this->markAllPreviousStepsAsDone,
                 'removeDoneStepOnNavigateBack' => $this->removeDoneStepOnNavigateBack,
-                'enableAnchorOnDoneStep' => $this->enableAnchorOnDoneStep,
+                'enableAnchorOnDoneStep'       => $this->enableAnchorOnDoneStep,
             ],
         ];
     }
@@ -699,9 +699,9 @@ JS;
                 $steps,
                 [
                     [
-                        'type' => self::STEP_TYPE_PREVIEW,
-                        'title' => $this->previewTitle,
-                        'description' => $this->previewDescription,
+                        'type'         => self::STEP_TYPE_PREVIEW,
+                        'title'        => $this->previewTitle,
+                        'description'  => $this->previewDescription,
                         'formInfoText' => $this->previewFormInfoText,
                     ],
                 ]
@@ -823,8 +823,8 @@ JS;
 
         //step data
         $dataStep = [
-            'number' => $index,
-            'type' => $stepType,
+            'number'   => $index,
+            'type'     => $stepType,
             'skipable' => $isSkipable,
         ];
 
@@ -879,13 +879,13 @@ JS;
         //create step generator object
         $stepGenerator = Yii::createObject(
             [
-                'class' => Generator::class,
-                'form' => $this->_form,
+                'class'       => Generator::class,
+                'form'        => $this->_form,
                 'formOptions' => $this->formOptions,
-                'stepConfig' => $stepConfig,
-                'stepIndex' => $stepIndex,
-                'isTabular' => $isTabularStep,
-                'limit' => $limitRows,
+                'stepConfig'  => $stepConfig,
+                'stepIndex'   => $stepIndex,
+                'isTabular'   => $isTabularStep,
+                'limit'       => $limitRows,
             ]
         );
 
